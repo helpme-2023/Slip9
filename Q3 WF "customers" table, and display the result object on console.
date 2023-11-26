@@ -1,0 +1,33 @@
+Create a node.js file that Select all records from the "customers" table, and display the 
+result object on console.
+
+var mysql = require('mysql')
+var con = mysql.createConnection({
+ host:"localhost",
+ user:"root",
+ password:"root",
+ database:"mydb"});
+con.connect(function(err){
+ if(err)throw err;
+ console.log("connected!");
+ var sql = "select * from customers";
+ con.query(sql,function(err,result){
+ if(err)throw err;
+ console.log(result);
+ });
+}); 
+-----------------------------------------------------------------------------------------------------------------
+Execution Steps –
+Npm install mysql
+1) It imports the 'mysql' module.
+2) It establishes a connection to a MySQL database running on localhost with the username "root"
+and password "root" and selects the "mydb" database.
+3) It checks if the connection was successful, and if so, it prints "connected!" to the console.
+4) It constructs an SQL query to select all records from the "customers" table.
+The records of customer table:
+Name
+Manali Pune
+Gayatri Mumbai
+Shruti Satara
+Connection closed.
+5) It executes the query using con.query() and handles any errors.
