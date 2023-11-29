@@ -1,30 +1,42 @@
 Write a python program to implement Linear SVM. 
 
 pip install scikit-learn
-# Importing necessary libraries
-import numpy as np
-from sklearn import datasets
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
 
-# Load the iris dataset as an example
-iris = datasets.load_iris()
-X = iris.data
-y = iris.target
+# Import the Libraries 
+import numpy as np 
+import matplotlib.pyplot as plt 
+from sklearn import svm, datasets 
 
-# Split the dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+iris = datasets.load_iris() 
 
-# Create a Linear SVM model
-svm_model = SVC(kernel='linear')
+# Take only the first two features of Data. 
+X = iris.data[:, :2] 
+y = iris.target 
+# C is the SVM regularization parameter 
+C = 1.0
 
-# Train the model
-svm_model.fit(X_train, y_train)
+# Create an Instance of SVM and Fit out the data. 
+svc = svm.SVC(kernel ='linear', C = 1).fit(X, y) 
 
-# Make predictions on the test set
-y_pred = svm_model.predict(X_test)
+ #SVC=Support Vector Classifier
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+h = (x_max / x_min)/100
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+ np.arange(y_min, y_max, h)) 
 
-# Calculate accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy: {accuracy * 100:.2f}%")
+# Plot the data for Proper Visual Representation 
+plt.subplot(1, 1, 1) 
+
+# Predict the result by giving Data to the model 
+Z = svc.predict(np.c_[xx.ravel(), yy.ravel()]) #ravel()-Return a contiguous flattened array.
+Z = Z.reshape(xx.shape) 
+plt.contourf(xx, yy, Z, cmap = plt.cm.Paired, alpha = 0.8) 
+plt.scatter(X[:, 0], X[:, 1], c = y, cmap = plt.cm.Paired) 
+plt.xlabel('Sepal length') 
+plt.ylabel('Sepal width') 
+plt.xlim(xx.min(), xx.max()) 
+plt.title('SVC with linear kernel') 
+
+# Output the Plot 
+plt.show()
