@@ -19,15 +19,13 @@ con.connect(function(err){
 -----------------------------------------------------------------------------------------------------------------
 Execution Steps –
 Npm install mysql
-1) It imports the 'mysql' module.
-2) It establishes a connection to a MySQL database running on localhost with the username "root"
-and password "root" and selects the "mydb" database.
-3) It checks if the connection was successful, and if so, it prints "connected!" to the console.
-4) It constructs an SQL query to select all records from the "customers" table.
-The records of customer table:
-Name
-Manali Pune
-Gayatri Mumbai
-Shruti Satara
-Connection closed.
-5) It executes the query using con.query() and handles any errors.
+1) write code in vs code
+2) create database in mysql workbench 
+3) create database customers;
+use customers;
+CREATE TABLE customers(customer_id INT PRIMARY KEY,name VARCHAR(50), address VARCHAR(50);
+insert into customers values("ram","pune);
+4) execute query --> select single query to execute it
+5) go to vs code --> run program --> node prog name
+Database displayed
+6) It executes the query using con.query() and handles any errors.
