@@ -1,1 +1,94 @@
 Design simple HR Application using Spring Framework
+
+// Employee.java
+@Entity
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String firstName;
+    private String lastName;
+    private String email;
+    
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+    
+    // getters and setters
+}
+
+// Department.java
+@Entity
+public class Department {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    // getters and setters
+}
+------------------------------------------------------------------------------------------------------------------------------------
+// EmployeeRepository.java
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    // Custom queries if needed
+}
+
+// DepartmentRepository.java
+public interface DepartmentRepository extends JpaRepository<Department, Long> {
+}
+--------------------------------------------------------------------------------------------------------------------------------------
+// EmployeeService.java
+public interface EmployeeService {
+    List<Employee> getAllEmployees();
+    Employee getEmployeeById(Long id);
+    void saveEmployee(Employee employee);
+    void deleteEmployee(Long id);
+}
+
+// EmployeeServiceImpl.java
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    // Implement methods from the interface
+}
+
+// DepartmentService.java
+public interface DepartmentService {
+    List<Department> getAllDepartments();
+    Department getDepartmentById(Long id);
+    void saveDepartment(Department department);
+    void deleteDepartment(Long id);
+}
+
+// DepartmentServiceImpl.java
+@Service
+public class DepartmentServiceImpl implements DepartmentService {
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+    // Implement methods from the interface
+}
+---------------------------------------------------------------------------------------------------
+// EmployeeController.java
+@RestController
+@RequestMapping("/employees")
+public class EmployeeController {
+    @Autowired
+    private EmployeeService employeeService;
+
+    // Implement CRUD operations
+}
+
+// DepartmentController.java
+@RestController
+@RequestMapping("/departments")
+public class DepartmentController {
+    @Autowired
+    private DepartmentService departmentService;
+
+    // Implement CRUD operations
+}
